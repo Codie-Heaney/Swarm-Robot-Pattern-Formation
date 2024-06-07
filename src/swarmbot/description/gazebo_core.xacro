@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+
+    <!--Gazebo Materials-->
+    <gazebo reference="chassis">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="caster_wheel">
+        <material>Gazebo/Red</material>
+        <mu1 value="0.00001"/>
+        <mu2 value="0.00001"/>
+    </gazebo>
+
+    <!--LiDAR Sensor-->
+    <gazebo reference="lidar_frame">
+        <material>Gazebo/Orange</material>
+
+        <sensor name="lidar" type="ray">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>181</samples>
+                        <resoultion>1</resoultion>
+                        <min_angle>-1.57</min_angle>
+                        <max_angle>1.57</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.075</min>
+                    <max>2.5</max>
+                    <resoultion>0.01</resoultion>
+                </range>
+            </ray>
+            <plugin name="lidar_controller" filename="libgazebo_ros_ray_sensor.so">
+                <ros>
+                    <remapping>~/out:=scan</remapping>
+                </ros>
+                <output_type>sensor_msgs/LaserScan</output_type>
+                <frame_name>lidar_frame</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!--Diff Drive Settings-->
+    <gazebo>
+        <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+
+            <wheel_separation>0.35</wheel_separation>
+            <wheel_diameter>0.1</wheel_diameter>
+
+            <max_wheel_torque>175</max_wheel_torque>
+            <max_wheel_accelertation>7.25</max_wheel_accelertation>
+
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>base_link</robot_base_frame>
+
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>true</publish_wheel_tf>
+
+        </plugin>
+    </gazebo>
+
+</robot>

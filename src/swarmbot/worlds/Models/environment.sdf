@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+<model name="enviornment">
+      <pose>0 0 0  0 0 0</pose>
+      <static>true</static>
+      <link name="body">
+      <collision name="collision">
+          <geometry>
+            <mesh><uri>file://obstacle.dae</uri></mesh>
+            <scale>1 1 1</scale>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file://obstacle.dae</uri></mesh>
+            <scale>1 1 1</scale>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    </sdf>
